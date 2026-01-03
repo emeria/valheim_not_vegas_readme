@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Valheim Mod Reference</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #121212; color: #cfcfcf; padding: 40px 0; }
+        .accordion-item { background-color: #1e1e1e; border: 1px solid #333; color: white; }
+        .accordion-button { background-color: #252525; color: #ffca28; border-bottom: 1px solid #333; }
+        .accordion-button:not(.collapsed) { background-color: #333; color: #00d4ff; }
+        .key-badge { background: #d32f2f; color: white; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+        .tip-box { background: #2c2c2c; border-left: 4px solid #00d4ff; padding: 10px; margin-top: 10px; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-5">🛡️ Our Valheim Mod Guide</h1>
+        <div class="accordion" id="modList">
+
+            <div class="accordion-item">
+                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#epicLoot">Epic Loot (v0.12.5)</button></h2>
+                <div id="epicLoot" class="accordion-collapse collapse" data-bs-parent="#modList">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Adds RPG-style loot drops (Magic, Rare, Epic, Legendary) and enchanting tables.</p>
+                        <p><strong>Hotkeys:</strong> <span class="key-badge">G</span>, <span class="key-badge">H</span>, <span class="key-badge">J</span> for Magic Abilities.</p>
+                        <div class="tip-box"><strong>Server Tip:</strong> Ensure <code>magiceffects.json</code> is identical on client and server to prevent load errors.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#seasonality">Seasonality</button></h2>
+                <div id="seasonality" class="accordion-collapse collapse" data-bs-parent="#modList">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Adds Winter, Spring, Summer, and Fall with changing textures and buffs.</p>
+                        <p><strong>Hotkeys:</strong> Use <code>seasonality timer_reset</code> in F5 console if time stops.</p>
+                        <div class="tip-box"><strong>Client Tip:</strong> Texture changes are client-side; performance can be improved by disabling high-res grass in configs.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#massFarm">Mass Farming</button></h2>
+                <div id="massFarm" class="accordion-collapse collapse" data-bs-parent="#modList">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Allows planting and picking up items in a large grid area.</p>
+                        <p><strong>Hotkeys:</strong> Hold <span class="key-badge">Left Shift</span> while using the Cultivator or harvesting.</p>
+                        <div class="tip-box"><strong>Config Tip:</strong> You can change the grid size (default 5x5) in the BepInEx config manager.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
