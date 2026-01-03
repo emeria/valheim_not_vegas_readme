@@ -8,77 +8,67 @@
     <style>
         body { background-color: #121212; color: #cfcfcf; padding: 40px 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .accordion-item { background-color: #1e1e1e; border: 1px solid #333; color: white; margin-bottom: 10px; border-radius: 8px !important; overflow: hidden; }
-        .accordion-button { background-color: #252525; color: #ffca28; font-weight: bold; }
+        .accordion-button { background-color: #252525; color: #ffca28; font-weight: bold; border-bottom: 1px solid #333; }
         .accordion-button:not(.collapsed) { background-color: #333; color: #00d4ff; box-shadow: none; }
         .key-badge { background: #d32f2f; color: white; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 0.9em; }
-        .section-title { color: #ffca28; font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; margin-bottom: 5px; font-weight: bold; }
+        .section-title { color: #ffca28; font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; margin-bottom: 5px; font-weight: bold; border-bottom: 1px solid #444; padding-bottom: 2px; }
         .tip-box { background: #2c2c2c; border-left: 4px solid #00d4ff; padding: 12px; margin-top: 10px; border-radius: 0 4px 4px 0; }
-        code { color: #ff79c6; background: #282a36; padding: 2px 4px; border-radius: 4px; }
         .global-note { background: #332b00; border: 1px solid #ffca28; color: #fff; padding: 15px; border-radius: 8px; margin-bottom: 30px; }
+        code { color: #ff79c6; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="text-center mb-2">🛡️ Valheim Mod Reference</h1>
-        <p class="text-center text-muted mb-4">Current Build: 0.221.4 (Network v35)</p>
+        <p class="text-center text-muted mb-4">Complete Guide for Current Server Installation</p>
 
         <div class="global-note">
-            <strong>Global Config Tip:</strong> Most mods can be configured in-game by pressing <span class="key-badge">F1</span> to open the <strong>BepInEx Configuration Manager</strong>. Settings changed here apply instantly or upon world reload.
+            <strong>How to Configure:</strong> Most mods can be adjusted in-game by pressing <span class="key-badge">F1</span> to open the <strong>Configuration Manager</strong>. Changes saved here apply immediately or after the next logout/login.
         </div>
 
         <div class="accordion" id="modList">
 
             <div class="accordion-item">
-                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#epicLoot">Epic Loot (v0.12.5)</button></h2>
+                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#epicLoot">Epic Loot</button></h2>
                 <div id="epicLoot" class="accordion-collapse collapse" data-bs-parent="#modList">
                     <div class="accordion-body">
-                        <p>Adds RPG-style rarity (Magic to Mythic) to drops, enchanting at the forge, and bounty hunting.</p>
-                        
+                        <p><strong>Description:</strong> Adds procedural loot drops, magic items, and enchanting to the game. Monsters and chests can now drop Magic, Rare, Epic, Legendary, or Mythic items with unique stat bonuses.</p>
                         <div class="section-title">Hotkeys</div>
-                        <p><span class="key-badge">G</span>, <span class="key-badge">H</span>, <span class="key-badge">J</span> for specific Magic Item abilities.</p>
-                        
-                        <div class="section-title">Configuration</div>
-                        <ul>
-                            <li><strong>Enable:</strong> Automatically active. Access the "Enchant" tab at any Forge.</li>
-                            <li><strong>Customizing:</strong> Edit <code>magiceffects.json</code> in the config folder to change stat ranges.</li>
-                        </ul>
-                        <div class="tip-box"><strong>Server Note:</strong> Both client and server MUST have the exact same <code>magiceffects.json</code> or the mod will fail to load.</div>
+                        <ul><li>Magic Abilities: <span class="key-badge">G</span>, <span class="key-badge">H</span>, <span class="key-badge">J</span> (depending on item)</li></ul>
+                        <div class="section-title">Configuration & Enable</div>
+                        <p><strong>Enable:</strong> Automatically active. To use, visit a Forge or Workbench; new "Enchant" and "Sacrifice" tabs will appear.</p>
+                        <p><strong>Settings:</strong> Edit <code>magiceffects.json</code> in the config folder to change stat ranges. Server and Client files MUST match perfectly.</p>
                     </div>
                 </div>
             </div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#seasonality">Seasonality (v3.7.6)</button></h2>
+                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#azuCrafty">AzuCraftyBoxes</button></h2>
+                <div id="azuCrafty" class="accordion-collapse collapse" data-bs-parent="#modList">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Allows you to use resources from nearby containers when crafting, building, or smelting, even if they aren't in your inventory.</p>
+                        <div class="section-title">Hotkeys</div>
+                        <ul>
+                            <li>Pull to Inventory: Hold <span class="key-badge">Left Ctrl</span> while clicking "Craft"</li>
+                            <li>Fill Station: <span class="key-badge">Left Shift</span> to pull all available fuel/ore</li>
+                        </ul>
+                        <div class="section-title">Configuration & Enable</div>
+                        <p><strong>Settings:</strong> Open <span class="key-badge">F1</span> > <strong>AzuCraftyBoxes</strong>. You can change the "Container Range" (default 20m) to reach further chests.</p>
+                        <div class="tip-box"><strong>Server Tip:</strong> This mod uses ServerSync. Admin range settings will override local client configs.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#seasonality">Seasonality</button></h2>
                 <div id="seasonality" class="accordion-collapse collapse" data-bs-parent="#modList">
                     <div class="accordion-body">
-                        <p>Changes world visuals and player stats based on 4 rotating seasons (Winter, Spring, Summer, Fall).</p>
-                        
+                        <p><strong>Description:</strong> Dynamic seasons that change textures and world stats (Winter, Spring, Summer, Fall). Provides an immersive environmental experience that changes with in-game time.</p>
                         <div class="section-title">Hotkeys / Console</div>
-                        <p><code>seasonality timer_reset</code> in the F5 console (Admins only) to restart the season clock.</p>
-                        
-                        <div class="section-title">Configuration</div>
-                        <ul>
-                            <li><strong>Enable:</strong> Textures swap automatically. Ensure "High Quality" textures are enabled in game settings for best look.</li>
-                            <li><strong>Settings:</strong> Use <span class="key-badge">F1</span> to change season duration (days) or toggle seasonal buffs (like Summer stamina boost).</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#massFarm">Mass Farming</button></h2>
-                <div id="massFarm" class="accordion-collapse collapse" data-bs-parent="#modList">
-                    <div class="accordion-body">
-                        <p>Speeds up agriculture by planting and harvesting in a large grid instead of one-by-one.</p>
-                        
-                        <div class="section-title">Hotkeys</div>
-                        <p>Hold <span class="key-badge">Left Shift</span> while planting with the Cultivator or interacting with grown crops.</p>
-                        
-                        <div class="section-title">Configuration</div>
-                        <ul>
-                            <li><strong>Grid Size:</strong> Default is 5x5. Change this to 3x3 or 10x10 in the <span class="key-badge">F1</span> menu under "MassFarming".</li>
-                            <li><strong>Stamina:</strong> There is a config toggle to "Ignore Stamina" if you find mass planting too exhausting.</li>
-                        </ul>
+                        <ul><li>Reset Season Timer: <code>seasonality timer_reset</code> (Admins in F5 console)</li></ul>
+                        <div class="section-title">Configuration & Enable</div>
+                        <p><strong>Enable:</strong> Visuals update automatically. Ensure "High Quality" textures are on in Valheim settings.</p>
+                        <p><strong>Settings:</strong> Configure season lengths and specific stat buffs (like Summer stamina) via the <span class="key-badge">F1</span> menu.</p>
                     </div>
                 </div>
             </div>
@@ -87,17 +77,25 @@
                 <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#autoFuel">Automatic Fuel</button></h2>
                 <div id="autoFuel" class="accordion-collapse collapse" data-bs-parent="#modList">
                     <div class="accordion-body">
-                        <p>Automatically pulls wood, coal, and ore from nearby chests to keep fires, smelters, and kilns running.</p>
-                        
+                        <p><strong>Description:</strong> Automatically pulls fuel (wood/coal) and ore from nearby containers or the ground to fill fireplaces, smelters, kilns, and torches.</p>
                         <div class="section-title">Hotkeys</div>
-                        <p>None. It works passively when you are near the structure.</p>
-                        
-                        <div class="section-title">Configuration</div>
-                        <ul>
-                            <li><strong>Range:</strong> Default pull range is 10m. Increase this via <span class="key-badge">F1</span> if your storage is further away.</li>
-                            <li><strong>Filters:</strong> You can exclude specific items (like Fine Wood) so the mod doesn't accidentally burn your build materials.</li>
-                        </ul>
-                        <div class="tip-box"><strong>Server Note:</strong> This mod uses ServerSync. If the admin sets a range of 5m, your client cannot override it to be larger.</div>
+                        <ul><li>Toggle Mod: Configurable via <span class="key-badge">F1</span> (default: none)</li></ul>
+                        <div class="section-title">Configuration & Enable</div>
+                        <p><strong>Enable:</strong> Passive on world load. Just stand near a station with resources in nearby chests.</p>
+                        <p><strong>Settings:</strong> Use <span class="key-badge">F1</span> to set the pull range and "Disallow Types" (to prevent burning expensive wood).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#massFarm">Mass Farming</button></h2>
+                <div id="massFarm" class="accordion-collapse collapse" data-bs-parent="#modList">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Allows planting and harvesting en masse in a grid. Makes large-scale farming significantly faster.</p>
+                        <div class="section-title">Hotkeys</div>
+                        <ul><li>Mass Action: Hold <span class="key-badge">Left Shift</span> while planting or harvesting</li></ul>
+                        <div class="section-title">Configuration & Enable</div>
+                        <p><strong>Settings:</strong> Access <span class="key-badge">F1</span> > <strong>MassFarming</strong> to change grid size (e.g., 5x5) and toggle "Ignore Stamina".</p>
                     </div>
                 </div>
             </div>
@@ -106,33 +104,65 @@
                 <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#zenRedec">ZenRedecorate</button></h2>
                 <div id="zenRedec" class="accordion-collapse collapse" data-bs-parent="#modList">
                     <div class="accordion-body">
-                        <p>Allows you to pick up and move chests and furniture without breaking them or emptying the inventory inside.</p>
-                        
-                        <div class="section-title">Hotkeys</div>
-                        <p>Equip Hammer, point at object, and hold <span class="key-badge">Left Ctrl</span> + <span class="key-badge">Left Click</span> to pick up. <span class="key-badge">Right Click</span> to cancel.</p>
-                        
-                        <div class="section-title">Configuration</div>
+                        <p><strong>Description:</strong> Allows you to pick up and move chests and furniture without destroying them. The contents of chests remain intact during the move.</p>
+                        <div class="section-header">Hotkeys</div>
                         <ul>
-                            <li><strong>Restrictions:</strong> By default, you cannot move items that provide structural support (like support beams). This can be toggled in <span class="key-badge">F1</span> settings.</li>
-                            <li><strong>Weight:</strong> You are usually encumbered while "carrying" a moved object.</li>
+                            <li>Move Object: Equip Hammer, Hold <span class="key-badge">Left Ctrl</span>, and <span class="key-badge">Left Click</span></li>
+                            <li>Cancel Move: <span class="key-badge">Right Click</span></li>
                         </ul>
+                        <div class="section-title">Configuration & Enable</div>
+                        <p><strong>Enable:</strong> Automatically enabled when Hammer is equipped.</p>
+                        <p><strong>Settings:</strong> Toggle whether you are "Encumbered" while carrying heavy chests via <span class="key-badge">F1</span>.</p>
                     </div>
                 </div>
             </div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#littleUI">My Little UI</button></h2>
+                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#doorOpener">DoorOpenerBruh</button></h2>
+                <div id="doorOpener" class="accordion-collapse collapse" data-bs-parent="#modList">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Automatically opens doors when you walk near them and closes them when you walk away.</p>
+                        <div class="section-title">Configuration & Enable</div>
+                        <p><strong>Enable:</strong> On by default. It respects Wards and private areas.</p>
+                        <p><strong>Settings:</strong> Use <span class="key-badge">F1</span> to set the detection distance and the "Auto-Close Delay".</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#littleUI">My Little UI / Weatherman</button></h2>
                 <div id="littleUI" class="accordion-collapse collapse" data-bs-parent="#modList">
                     <div class="accordion-body">
-                        <p>Small QoL UI tweaks: adds a clock, weather forecast, and better inventory tooltips.</p>
-                        
+                        <p><strong>Description:</strong> A collection of HUD tweaks adding a clock, weather forecast, wind direction, and detailed item tooltips.</p>
                         <div class="section-title">Hotkeys</div>
-                        <p>Hold <span class="key-badge">Alt</span> while hovering over an item to see the original, un-modded tooltip.</p>
-                        
-                        <div class="section-title">Configuration</div>
+                        <ul><li>View Original Tooltip: Hold <span class="key-badge">Alt</span> while hovering over an item</li></ul>
+                        <div class="section-title">Configuration & Enable</div>
+                        <p><strong>Settings:</strong> Every element (Clock, Weather) can be dragged and repositioned while the <span class="key-badge">F1</span> menu is open.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#taming">Adjust Taming Speed</button></h2>
+                <div id="taming" class="accordion-collapse collapse" data-bs-parent="#modList">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Increases the speed at which animals are tamed (Boars, Wolves, etc.).</p>
+                        <div class="section-title">Configuration & Enable</div>
+                        <p><strong>Settings:</strong> Admin must set the multiplier (e.g., 2.0 for double speed) in the server's <code>zukane2.AdjustTamingSpeed.cfg</code>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#libs">System Libraries (Back-end)</button></h2>
+                <div id="libs" class="accordion-collapse collapse" data-bs-parent="#modList">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> These mods don't have visual settings but are required for the others to function.</p>
                         <ul>
-                            <li><strong>Placement:</strong> Use the <span class="key-badge">F1</span> menu to drag the Clock and Weather Forecast to different corners of your screen.</li>
-                            <li><strong>Colors:</strong> Every UI element's font and background transparency is customizable.</li>
+                            <li><strong>Jotunn:</strong> Framework for adding new prefabs and pieces.</li>
+                            <li><strong>Zen.ModLib:</strong> Shared logic for all ZenDragon mods.</li>
+                            <li><strong>ZenItemStands:</strong> Passive improvement to how item stands handle items.</li>
+                            <li><strong>BepInEx:</strong> The base loader for all Valheim mods.</li>
                         </ul>
                     </div>
                 </div>
