@@ -169,6 +169,34 @@
             </div>
 
         </div>
+        <div class="admin-section" style="background: #1a1a1a; border: 1px solid #444; padding: 20px; border-radius: 8px; margin-top: 40px;">
+    <h2 style="color: #ff5252; border-bottom: 2px solid #ff5252; padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">👑 Admin Management & Commands</h2>
+    
+    <div class="section-title">How to Add Admins</div>
+    <p>To grant admin rights, you must add the player's <strong>SteamID64</strong> to the server files:</p>
+    <ol>
+        <li>Find the <code>adminlist.txt</code> file (usually in the server's save folder or <code>AppData/LocalLow/IronGate/Valheim</code>).</li>
+        <li>Paste the SteamID64 (a long 17-digit number). Add one ID per line.</li>
+        <li><strong>How to find ID:</strong> Press <span class="key-badge">F2</span> while in-game to see a list of players and their IDs next to their names.</li>
+    </ol>
+
+    <div class="section-title">Universal Console Commands</div>
+    <p>Press <span class="key-badge">F5</span> to open the console. (Must have <code>-console</code> as a Steam Launch Option).</p>
+    <ul>
+        <li><code>devcommands</code> - Enables administrative commands (Admin only).</li>
+        <li><code>debugmode</code> - Creative mode (Press <strong>B</strong> for free build, <strong>K</strong> to kill mobs, <strong>Z</strong> to fly).</li>
+        <li><code>save</code> - Forces the server to save the world immediately.</li>
+        <li><code>kick [name/ID]</code> / <code>ban [name/ID]</code> - Manage problem players.</li>
+    </ul>
+
+    <div class="section-title">Mod Specific Commands</div>
+    <ul>
+        <li><strong>Seasonality:</strong> <code>seasonality timer_reset</code> - Restores the season schedule if it gets desynced.</li>
+        <li><strong>Epic Loot:</strong> <code>magicitem [rarity] [item]</code> - Spawns a magic item (e.g. <code>magicitem Legendary SwordIron</code>).</li>
+        <li><strong>Epic Loot:</strong> <code>bounties</code> - Lists all available bounties currently active in the world.</li>
+        <li><strong>Automatic Fuel:</strong> <code>autofuel reset</code> - Forces all stations to re-scan for nearby containers.</li>
+    </ul>
+</div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
