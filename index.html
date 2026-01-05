@@ -25,14 +25,12 @@
         <div class="global-note">
             <strong>How to Configure:</strong> Most mods can be adjusted in-game by pressing <span class="key-badge">F1</span> to open the <strong>Configuration Manager</strong>. Changes saved here apply immediately or after the next logout/login.
         </div>
-<div id="download-section" class="global-note" style="background: #1a1a1a; border: 1px solid #00d4ff;">
-    <h5 style="color: #00d4ff; margin-bottom: 10px;">📦 Download Mod Pack</h5>
-    <p>The mod pack is hosted on Google Drive due to its size.</p>
-    <div id="download-container">
-        <a href="https://drive.google.com/drive/folders/1YGdhyTaMHiWQYwDWCV8r46qtWtazcbQ9" target="_blank" class="btn btn-primary" style="background-color: #00d4ff; border: none; color: #000; font-weight: bold;">
-            Open Google Drive Folder
+<div id="download-section" class="global-note">
+    <h5 style="color: #00d4ff;">📦 Latest Mod Pack</h5>
+    <p id="pack-status">Checking for latest version...</p> <div id="download-container" style="display: none;"> <a id="download-link" href="#" class="btn btn-primary"> Download Latest Mods (.zip)
         </a>
-        <p style="font-size: 0.8em; margin-top: 10px; color: #888;">Tip: Once the folder opens, right-click the newest <b>.zip</b> and select "Download".</p>
+        <p style="font-size: 0.8em; margin-top: 5px; color: #888;">
+            Filename: <span id="filename"></span> </p>
     </div>
 </div>
         <div class="accordion" id="modList">
@@ -213,13 +211,18 @@ const API_KEY = 'AIzaSyCuLp3VtWNVZOUHkuuHGSl4URytfYSPgPU';
 const FOLDER_ID = '1YGdhyTaMHiWQYwDWCV8r46qtWtazcbQ9';
 
 async function getLatestDriveZip() {
-    // Select the elements from your existing HTML
+    // Select elements
     const statusText = document.getElementById('pack-status');
     const container = document.getElementById('download-container');
     const downloadLink = document.getElementById('download-link');
     const filenameDisplay = document.getElementById('filename');
 
-    // API Query: Looking specifically inside your FOLDER_ID for .zip files
+    // Safety: If the basic status text element is missing, stop immediately
+    if (!statusText) {
+        console.error("HTML missing element with id='pack-status'");
+        return;
+    }
+
     const query = encodeURIComponent(`'${FOLDER_ID}' in parents and name contains '.zip' and trashed = false`);
     const url = `https://www.googleapis.com/drive/v3/files?q=${query}&orderBy=name+desc&fields=files(id,name)&key=${API_KEY}`;
 
@@ -228,7 +231,7 @@ async function getLatestDriveZip() {
         const data = await response.json();
 
         if (data.error) {
-            statusText.innerText = "Error: " + data.error.message;
+            statusText.innerText = "API Error: " + data.error.message;
             return;
         }
 
@@ -237,18 +240,14 @@ async function getLatestDriveZip() {
             return;
         }
 
-        // data.files[0] is the latest zip based on alphabetical/numerical sort
         const latestFile = data.files[0];
         
-        // UI Updates
+        // Update UI only if elements exist
         statusText.style.display = 'none';
-        container.style.display = 'block';
         
-        // This link FORCES the browser to download rather than open the Drive UI
-        downloadLink.href = `https://drive.google.com/uc?export=download&id=${latestFile.id}&confirm=t`;
-        
-        // If your HTML has a place to show the filename, we update it here
-        if(filenameDisplay) filenameDisplay.innerText = latestFile.name;
+        if (container) container.style.display = 'block';
+        if (downloadLink) downloadLink.href = `https://drive.google.com/uc?export=download&id=${latestFile.id}&confirm=t`;
+        if (filenameDisplay) filenameDisplay.innerText = latestFile.name;
 
     } catch (error) {
         statusText.innerText = "Connection to Google Drive failed.";
@@ -256,8 +255,8 @@ async function getLatestDriveZip() {
     }
 }
 
-// Initialize the fetch
-getLatestDriveZip();
+// This ensures the script waits for the HTML to be "ready" before looking for IDs
+window.addEventListener('load', getLatestDriveZip);
     </script>
 </body>
 </html>
