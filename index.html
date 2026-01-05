@@ -213,38 +213,50 @@ const API_KEY = 'AIzaSyCuLp3VtWNVZOUHkuuHGSl4URytfYSPgPU';
 const FOLDER_ID = '1YGdhyTaMHiWQYwDWCV8r46qtWtazcbQ9';
 
 async function getLatestDriveZip() {
+    // Select the elements from your existing HTML
     const statusText = document.getElementById('pack-status');
     const container = document.getElementById('download-container');
     const downloadLink = document.getElementById('download-link');
     const filenameDisplay = document.getElementById('filename');
 
-    // API Query: Look for zips in the folder, sort by name descending
-    const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+name+contains+'.zip'+and+trashed=false&orderBy=name+desc&fields=files(id,name)&key=${API_KEY}`;
+    // API Query: Looking specifically inside your FOLDER_ID for .zip files
+    const query = encodeURIComponent(`'${FOLDER_ID}' in parents and name contains '.zip' and trashed = false`);
+    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&orderBy=name+desc&fields=files(id,name)&key=${API_KEY}`;
 
     try {
         const response = await fetch(url);
         const data = await response.json();
 
-        if (!data.files || data.files.length === 0) {
-            statusText.innerText = "No zip files found in Drive folder.";
+        if (data.error) {
+            statusText.innerText = "Error: " + data.error.message;
             return;
         }
 
+        if (!data.files || data.files.length === 0) {
+            statusText.innerText = "No zip files found in folder.";
+            return;
+        }
+
+        // data.files[0] is the latest zip based on alphabetical/numerical sort
         const latestFile = data.files[0];
         
+        // UI Updates
         statusText.style.display = 'none';
         container.style.display = 'block';
         
-        // Direct download link trick for Google Drive
-        downloadLink.href = `https://drive.google.com/uc?export=download&id=${latestFile.id}`;
-        filenameDisplay.innerText = latestFile.name;
+        // This link FORCES the browser to download rather than open the Drive UI
+        downloadLink.href = `https://drive.google.com/uc?export=download&id=${latestFile.id}&confirm=t`;
+        
+        // If your HTML has a place to show the filename, we update it here
+        if(filenameDisplay) filenameDisplay.innerText = latestFile.name;
 
     } catch (error) {
-        statusText.innerText = "Error connecting to Google Drive.";
+        statusText.innerText = "Connection to Google Drive failed.";
         console.error(error);
     }
 }
 
+// Initialize the fetch
 getLatestDriveZip();
     </script>
 </body>
