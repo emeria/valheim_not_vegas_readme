@@ -217,51 +217,39 @@ const API_KEY = 'AIzaSyCuLp3VtWNVZOUHkuuHGSl4URytfYSPgPU';
 const FOLDER_ID = '1YGdhyTaMHiWQYwDWCV8r46qtWtazcbQ9';
 
 async function getLatestDriveZip() {
-    // Select elements
     const statusText = document.getElementById('pack-status');
     const container = document.getElementById('download-container');
     const downloadLink = document.getElementById('download-link');
     const filenameDisplay = document.getElementById('filename');
 
-    // Safety: If the basic status text element is missing, stop immediately
-    if (!statusText) {
-        console.error("HTML missing element with id='pack-status'");
-        return;
-    }
-
-    const query = encodeURIComponent(`'${FOLDER_ID}' in parents and name contains '.zip' and trashed = false`);
+    const query = encodeURIComponent(`'${FOLDER_ID}' in parents and trashed = false`);
     const url = `https://www.googleapis.com/drive/v3/files?q=${query}&orderBy=name+desc&fields=files(id,name)&key=${API_KEY}`;
 
     try {
         const response = await fetch(url);
         const data = await response.json();
 
-        if (data.error) {
-            statusText.innerText = "API Error: " + data.error.message;
-            return;
+        if (data.files && data.files.length > 0) {
+            // Find the first file that is a zip
+            const latestZip = data.files.find(f => f.name.toLowerCase().endsWith('.zip'));
+
+            if (latestZip) {
+                if (statusText) statusText.style.display = 'none';
+                if (container) container.style.display = 'block';
+                if (downloadLink) downloadLink.href = `https://drive.google.com/uc?export=download&id=${latestZip.id}&confirm=t`;
+                if (filenameDisplay) filenameDisplay.innerText = latestZip.name;
+            } else {
+                if (statusText) statusText.innerText = "No .zip files found in folder.";
+            }
+        } else {
+            if (statusText) statusText.innerText = "Folder is empty.";
         }
-
-        if (!data.files || data.files.length === 0) {
-            statusText.innerText = "No zip files found in folder.";
-            return;
-        }
-
-        const latestFile = data.files[0];
-        
-        // Update UI only if elements exist
-        statusText.style.display = 'none';
-        
-        if (container) container.style.display = 'block';
-        if (downloadLink) downloadLink.href = `https://drive.google.com/uc?export=download&id=${latestFile.id}&confirm=t`;
-        if (filenameDisplay) filenameDisplay.innerText = latestFile.name;
-
     } catch (error) {
-        statusText.innerText = "Connection to Google Drive failed.";
+        if (statusText) statusText.innerText = "Error connecting to Google Drive.";
         console.error(error);
     }
 }
 
-// This ensures the script waits for the HTML to be "ready" before looking for IDs
 window.addEventListener('load', getLatestDriveZip);
     </script>
 </body>
