@@ -25,3 +25,5 @@ The guide includes information about:
 - **Epic Loot (v0.12.5)**: RPG-style loot drops and enchanting tables
 - **Seasonality**: Dynamic seasons with changing textures and buffs
 - **Mass Farming**: Grid-based planting and harvesting
+
+Zips are pulled from:
