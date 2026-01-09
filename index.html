@@ -125,9 +125,22 @@
               Filename: <span id="filename-mods">Searching...</span>
             </p>
             <p style="font-size: 0.8em; color: #888">
-              r2modman import code:
-              <span id="r2modman-code" class="key-badge" style="background: #333"
-                >Loading...</span
+              r2modman profile:
+              <a
+                id="r2modman-link"
+                href="#"
+                class="btn btn-sm"
+                style="
+                  background-color: #ffca28;
+                  color: #000;
+                  font-weight: bold;
+                  padding: 5px 15px;
+                  text-decoration: none;
+                  border-radius: 4px;
+                  display: inline-block;
+                  margin-left: 10px;
+                "
+                >Loading...</a
               >
             </p>
           </div>
@@ -710,17 +723,54 @@
           const response = await fetch('config.json');
           const config = await response.json();
           
-          // Update r2modman import code
-          const r2modmanCodeElement = document.getElementById('r2modman-code');
-          if (r2modmanCodeElement && config.r2modmanImportCode) {
-            r2modmanCodeElement.innerText = config.r2modmanImportCode;
-          }
+          // Fetch latest r2modman file from GitHub
+          await loadR2ModmanFile(config);
         } catch (error) {
           console.error('Error loading config:', error);
-          const r2modmanCodeElement = document.getElementById('r2modman-code');
-          if (r2modmanCodeElement) {
-            r2modmanCodeElement.innerText = 'Config load failed';
+          const r2modmanLink = document.getElementById('r2modman-link');
+          if (r2modmanLink) {
+            r2modmanLink.innerText = 'Config load failed';
+            r2modmanLink.style.opacity = '0.5';
+            r2modmanLink.style.pointerEvents = 'none';
           }
+        }
+      }
+
+      async function loadR2ModmanFile(config) {
+        const { githubOwner, githubRepo, r2modmanFolder } = config;
+        const r2modmanLink = document.getElementById('r2modman-link');
+
+        if (!githubOwner || !githubRepo || !r2modmanFolder) {
+          r2modmanLink.innerText = 'Config incomplete';
+          r2modmanLink.style.opacity = '0.5';
+          r2modmanLink.style.pointerEvents = 'none';
+          return;
+        }
+
+        try {
+          // Fetch files from GitHub API
+          const apiUrl = `https://api.github.com/repos/${githubOwner}/${githubRepo}/contents/${r2modmanFolder}`;
+          const response = await fetch(apiUrl);
+          const files = await response.json();
+
+          if (files && Array.isArray(files) && files.length > 0) {
+            // Sort by name descending to get the latest
+            files.sort((a, b) => b.name.localeCompare(a.name));
+            const latestFile = files[0];
+
+            r2modmanLink.href = latestFile.download_url;
+            r2modmanLink.innerText = `Download ${latestFile.name}`;
+            r2modmanLink.download = latestFile.name;
+          } else {
+            r2modmanLink.innerText = 'No files found';
+            r2modmanLink.style.opacity = '0.5';
+            r2modmanLink.style.pointerEvents = 'none';
+          }
+        } catch (error) {
+          console.error('Error loading r2modman file:', error);
+          r2modmanLink.innerText = 'GitHub load failed';
+          r2modmanLink.style.opacity = '0.5';
+          r2modmanLink.style.pointerEvents = 'none';
         }
       }
 
