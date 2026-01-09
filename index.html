@@ -126,8 +126,8 @@
             </p>
             <p style="font-size: 0.8em; color: #888">
               r2modman import code:
-              <span class="key-badge" style="background: #333"
-                >019b9ef8-476a-3870-9c3b-c748d76b467c</span
+              <span id="r2modman-code" class="key-badge" style="background: #333"
+                >Loading...</span
               >
             </p>
           </div>
@@ -705,6 +705,25 @@
       const API_KEY = "AIzaSyCuLp3VtWNVZOUHkuuHGSl4URytfYSPgPU";
       const FOLDER_ID = "1YGdhyTaMHiWQYwDWCV8r46qtWtazcbQ9";
 
+      async function loadConfig() {
+        try {
+          const response = await fetch('config.json');
+          const config = await response.json();
+          
+          // Update r2modman import code
+          const r2modmanCodeElement = document.getElementById('r2modman-code');
+          if (r2modmanCodeElement && config.r2modmanImportCode) {
+            r2modmanCodeElement.innerText = config.r2modmanImportCode;
+          }
+        } catch (error) {
+          console.error('Error loading config:', error);
+          const r2modmanCodeElement = document.getElementById('r2modman-code');
+          if (r2modmanCodeElement) {
+            r2modmanCodeElement.innerText = 'Config load failed';
+          }
+        }
+      }
+
       async function getLatestDriveZip() {
         const statusText = document.getElementById("pack-status");
         const container = document.getElementById("download-container");
@@ -769,7 +788,10 @@
         }
       }
 
-      window.addEventListener("load", getLatestDriveZip);
+      window.addEventListener("load", () => {
+        loadConfig();
+        getLatestDriveZip();
+      });
     </script>
   </body>
 </html>
