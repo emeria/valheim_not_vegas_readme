@@ -124,28 +124,9 @@
             <p style="font-size: 0.8em; margin-top: 5px; color: #888">
               Filename: <span id="filename-mods">Searching...</span>
             </p>
-            <p style="font-size: 0.8em; color: #888">
-              r2modman profile:
-              <a
-                id="r2modman-link"
-                href="#"
-                class="btn btn-sm"
-                style="
-                  background-color: #ffca28;
-                  color: #000;
-                  font-weight: bold;
-                  padding: 5px 15px;
-                  text-decoration: none;
-                  border-radius: 4px;
-                  display: inline-block;
-                  margin-left: 10px;
-                "
-                >Loading...</a
-              >
-            </p>
           </div>
 
-          <div>
+          <div style="margin-bottom: 20px">
             <h6 style="color: #00d4ff">2. Server Configurations</h6>
             <a
               id="download-link-config"
@@ -165,6 +146,29 @@
             </a>
             <p style="font-size: 0.8em; margin-top: 5px; color: #888">
               Filename: <span id="filename-config">Searching...</span>
+            </p>
+          </div>
+
+          <div>
+            <h6 style="color: #00d4ff">3. r2modman Profile</h6>
+            <a
+              id="download-link-r2modman"
+              href="#"
+              class="btn"
+              style="
+                background-color: #ffca28;
+                color: #000;
+                font-weight: bold;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 5px;
+                display: inline-block;
+              "
+            >
+              Download Latest Profile (.r2z)
+            </a>
+            <p style="font-size: 0.8em; margin-top: 5px; color: #888">
+              Filename: <span id="filename-r2modman">Searching...</span>
             </p>
           </div>
         </div>
@@ -718,62 +722,6 @@
       const API_KEY = "AIzaSyCuLp3VtWNVZOUHkuuHGSl4URytfYSPgPU";
       const FOLDER_ID = "1YGdhyTaMHiWQYwDWCV8r46qtWtazcbQ9";
 
-      async function loadConfig() {
-        try {
-          const response = await fetch('config.json');
-          const config = await response.json();
-          
-          // Fetch latest r2modman file from GitHub
-          await loadR2ModmanFile(config);
-        } catch (error) {
-          console.error('Error loading config:', error);
-          const r2modmanLink = document.getElementById('r2modman-link');
-          if (r2modmanLink) {
-            r2modmanLink.innerText = 'Config load failed';
-            r2modmanLink.style.opacity = '0.5';
-            r2modmanLink.style.pointerEvents = 'none';
-          }
-        }
-      }
-
-      async function loadR2ModmanFile(config) {
-        const { githubOwner, githubRepo, r2modmanFolder } = config;
-        const r2modmanLink = document.getElementById('r2modman-link');
-
-        if (!githubOwner || !githubRepo || !r2modmanFolder) {
-          r2modmanLink.innerText = 'Config incomplete';
-          r2modmanLink.style.opacity = '0.5';
-          r2modmanLink.style.pointerEvents = 'none';
-          return;
-        }
-
-        try {
-          // Fetch files from GitHub API
-          const apiUrl = `https://api.github.com/repos/${githubOwner}/${githubRepo}/contents/${r2modmanFolder}`;
-          const response = await fetch(apiUrl);
-          const files = await response.json();
-
-          if (files && Array.isArray(files) && files.length > 0) {
-            // Sort by name descending to get the latest
-            files.sort((a, b) => b.name.localeCompare(a.name));
-            const latestFile = files[0];
-
-            r2modmanLink.href = latestFile.download_url;
-            r2modmanLink.innerText = `Download ${latestFile.name}`;
-            r2modmanLink.download = latestFile.name;
-          } else {
-            r2modmanLink.innerText = 'No files found';
-            r2modmanLink.style.opacity = '0.5';
-            r2modmanLink.style.pointerEvents = 'none';
-          }
-        } catch (error) {
-          console.error('Error loading r2modman file:', error);
-          r2modmanLink.innerText = 'GitHub load failed';
-          r2modmanLink.style.opacity = '0.5';
-          r2modmanLink.style.pointerEvents = 'none';
-        }
-      }
-
       async function getLatestDriveZip() {
         const statusText = document.getElementById("pack-status");
         const container = document.getElementById("download-container");
@@ -783,6 +731,9 @@
 
         const configLink = document.getElementById("download-link-config");
         const configFileLabel = document.getElementById("filename-config");
+
+        const r2modmanLink = document.getElementById("download-link-r2modman");
+        const r2modmanFileLabel = document.getElementById("filename-r2modman");
 
         // Query for all non-trashed files in the folder
         const query = encodeURIComponent(
@@ -805,6 +756,9 @@
                 (f.name.toLowerCase().includes("config") ||
                   f.name.toLowerCase().includes("cfg")) &&
                 f.name.endsWith(".zip")
+            );
+            const latestR2modman = data.files.find(
+              (f) => f.name.endsWith(".r2z")
             );
 
             statusText.style.display = "none";
@@ -829,6 +783,16 @@
               configLink.style.opacity = "0.5";
               configLink.style.pointerEvents = "none";
             }
+
+            // Update r2modman UI
+            if (latestR2modman) {
+              r2modmanLink.href = `https://drive.google.com/uc?export=download&id=${latestR2modman.id}&confirm=t`;
+              r2modmanFileLabel.innerText = latestR2modman.name;
+            } else {
+              r2modmanFileLabel.innerText = "No .r2z file found.";
+              r2modmanLink.style.opacity = "0.5";
+              r2modmanLink.style.pointerEvents = "none";
+            }
           } else {
             statusText.innerText = "Folder is empty.";
           }
@@ -838,10 +802,7 @@
         }
       }
 
-      window.addEventListener("load", () => {
-        loadConfig();
-        getLatestDriveZip();
-      });
+      window.addEventListener("load", getLatestDriveZip);
     </script>
   </body>
 </html>
