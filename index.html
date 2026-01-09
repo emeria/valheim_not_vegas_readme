@@ -1,286 +1,775 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Valheim Server Mod Guide</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <style>
-        body { background-color: #121212; color: #cfcfcf; padding: 40px 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .accordion-item { background-color: #1e1e1e; border: 1px solid #333; color: white; margin-bottom: 10px; border-radius: 8px !important; overflow: hidden; }
-        .accordion-button { background-color: #252525; color: #ffca28; font-weight: bold; border-bottom: 1px solid #333; }
-        .accordion-button:not(.collapsed) { background-color: #333; color: #00d4ff; box-shadow: none; }
-        .key-badge { background: #d32f2f; color: white; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 0.9em; }
-        .section-title { color: #ffca28; font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; margin-bottom: 5px; font-weight: bold; border-bottom: 1px solid #444; padding-bottom: 2px; }
-        .tip-box { background: #2c2c2c; border-left: 4px solid #00d4ff; padding: 12px; margin-top: 10px; border-radius: 0 4px 4px 0; }
-        .global-note { background: #332b00; border: 1px solid #ffca28; color: #fff; padding: 15px; border-radius: 8px; margin-bottom: 30px; }
-        code { color: #ff79c6; }
+      body {
+        background-color: #121212;
+        color: #cfcfcf;
+        padding: 40px 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .accordion-item {
+        background-color: #1e1e1e;
+        border: 1px solid #333;
+        color: white;
+        margin-bottom: 10px;
+        border-radius: 8px !important;
+        overflow: hidden;
+      }
+      .accordion-button {
+        background-color: #252525;
+        color: #ffca28;
+        font-weight: bold;
+        border-bottom: 1px solid #333;
+      }
+      .accordion-button:not(.collapsed) {
+        background-color: #333;
+        color: #00d4ff;
+        box-shadow: none;
+      }
+      .key-badge {
+        background: #d32f2f;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 0.9em;
+      }
+      .section-title {
+        color: #ffca28;
+        font-size: 0.85em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        border-bottom: 1px solid #444;
+        padding-bottom: 2px;
+      }
+      .tip-box {
+        background: #2c2c2c;
+        border-left: 4px solid #00d4ff;
+        padding: 12px;
+        margin-top: 10px;
+        border-radius: 0 4px 4px 0;
+      }
+      .global-note {
+        background: #332b00;
+        border: 1px solid #ffca28;
+        color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+      }
+      code {
+        color: #ff79c6;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1 class="text-center mb-2">🛡️ Valheim Mod Reference</h1>
-        <p class="text-center text-muted mb-4">Complete Guide for Current Server Installation</p>
+      <h1 class="text-center mb-2">🛡️ Valheim Mod Reference</h1>
+      <p class="text-center text-muted mb-4">
+        Complete Guide for Current Server Installation
+      </p>
 
-        <div class="global-note">
-            <strong>How to Configure:</strong> Most mods can be adjusted in-game by pressing <span class="key-badge">F1</span> to open the <strong>Configuration Manager</strong>. Changes saved here apply immediately or after the next logout/login.
+      <div class="global-note">
+        <strong>How to Configure:</strong> Most mods can be adjusted in-game by
+        pressing <span class="key-badge">F1</span> to open the
+        <strong>Configuration Manager</strong>. Changes saved here apply
+        immediately or after the next logout/login.
+      </div>
+      <div
+        class="global-note"
+        style="background: #1a1a1a; border: 1px solid #00d4ff"
+      >
+        <h5 style="color: #00d4ff">📦 Latest Mod Pack</h5>
+
+        <p id="pack-status">Checking for latest version...</p>
+
+        <div
+          id="download-container"
+          style="
+            display: none;
+            border: 1px solid #333;
+            padding: 15px;
+            border-radius: 8px;
+          "
+        >
+          <div style="margin-bottom: 20px">
+            <h6 style="color: #00d4ff">1. Mods Pack</h6>
+            <a
+              id="download-link-mods"
+              href="#"
+              class="btn"
+              style="
+                background-color: #00d4ff;
+                color: #000;
+                font-weight: bold;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 5px;
+                display: inline-block;
+              "
+            >
+              Download Latest Mods (.zip)
+            </a>
+            <p style="font-size: 0.8em; margin-top: 5px; color: #888">
+              Filename: <span id="filename-mods">Searching...</span>
+            </p>
+            <p style="font-size: 0.8em; color: #888">
+              r2modman import code:
+              <span class="key-badge" style="background: #333"
+                >019b9ef8-476a-3870-9c3b-c748d76b467c</span
+              >
+            </p>
+          </div>
+
+          <div>
+            <h6 style="color: #00d4ff">2. Server Configurations</h6>
+            <a
+              id="download-link-config"
+              href="#"
+              class="btn"
+              style="
+                background-color: #00d4ff;
+                color: #000;
+                font-weight: bold;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 5px;
+                display: inline-block;
+              "
+            >
+              Download Latest Configs (.zip)
+            </a>
+            <p style="font-size: 0.8em; margin-top: 5px; color: #888">
+              Filename: <span id="filename-config">Searching...</span>
+            </p>
+          </div>
         </div>
-<div class="global-note" style="background: #1a1a1a; border: 1px solid #00d4ff;">
-    <h5 style="color: #00d4ff;">📦 Latest Mod Pack</h5>
-    
-    <p id="pack-status">Checking for latest version...</p> 
-
-    <div id="download-container" style="display: none;"> 
-        <a id="download-link" href="#" class="btn" style="background-color: #00d4ff; color: #000; font-weight: bold; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
-            Download Latest Mods (.zip)
-        </a>
-        <p style="font-size: 0.8em; margin-top: 10px; color: #888;">
-            Filename: <span id="filename"></span> 
-        </p>
-        
-        <p style="font-size: 0.8em; margin-top: 10px; color: #888;">
-            r2modman import code: <span id="r2modman">019b9ef8-476a-3870-9c3b-c748d76b467c</span> 
-        </p>
-    </div>
-</div>
-        <div class="accordion" id="modList">
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#azuAreaRepair">AzuAreaRepair</button></h2>
-    <div id="azuAreaRepair" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Repairs all nearby pieces in an area when using the hammer's repair function.</p>
-            <div class="section-title">Configuration</div>
-            <p>Use <span class="key-badge">F1</span> to adjust the repair radius and toggle stamina usage.</p>
+      </div>
+      <div class="accordion" id="modList">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#azuAreaRepair"
+            >
+              AzuAreaRepair
+            </button>
+          </h2>
+          <div
+            id="azuAreaRepair"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Repairs all nearby pieces in an
+                area when using the hammer's repair function.
+              </p>
+              <div class="section-title">Configuration</div>
+              <p>
+                Use <span class="key-badge">F1</span> to adjust the repair
+                radius and toggle stamina usage.
+              </p>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#azuCrafty">AzuCraftyBoxes</button></h2>
-    <div id="azuCrafty" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Pulls building and crafting materials directly from nearby chests so you don't have to carry them.</p>
-            <div class="section-title">Configuration</div>
-            <p>Adjust the "Container Range" in the <span class="key-badge">F1</span> menu.</p>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#azuCrafty"
+            >
+              AzuCraftyBoxes
+            </button>
+          </h2>
+          <div
+            id="azuCrafty"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Pulls building and crafting
+                materials directly from nearby chests so you don't have to carry
+                them.
+              </p>
+              <div class="section-title">Configuration</div>
+              <p>
+                Adjust the "Container Range" in the
+                <span class="key-badge">F1</span> menu.
+              </p>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#azuInventory">AzuExtendedPlayerInventory</button></h2>
-    <div id="azuInventory" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Adds more rows to your inventory, dedicated armor slots, and quick slots.</p>
-            <div class="section-title">Hotkeys</div>
-            <ul><li>Quick Slots 1-3: <span class="key-badge">Z</span>, <span class="key-badge">X</span>, <span class="key-badge">C</span></li></ul>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#azuInventory"
+            >
+              AzuExtendedPlayerInventory
+            </button>
+          </h2>
+          <div
+            id="azuInventory"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Adds more rows to your inventory,
+                dedicated armor slots, and quick slots.
+              </p>
+              <div class="section-title">Hotkeys</div>
+              <ul>
+                <li>
+                  Quick Slots 1-3: <span class="key-badge">Z</span>,
+                  <span class="key-badge">X</span>,
+                  <span class="key-badge">C</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#almanac">Almanac Class System</button></h2>
-    <div id="almanac" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Adds an RPG progression system with distinct classes and level-up rewards.</p>
-            <div class="section-title">Hotkeys</div>
-            <ul><li>Open Class Menu: <span class="key-badge">F6</span></li></ul>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#almanac"
+            >
+              Almanac Class System
+            </button>
+          </h2>
+          <div
+            id="almanac"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Adds an RPG progression system
+                with distinct classes and level-up rewards.
+              </p>
+              <div class="section-title">Hotkeys</div>
+              <ul>
+                <li>Open Class Menu: <span class="key-badge">F6</span></li>
+              </ul>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#jewelcraft">Jewelcrafting</button></h2>
-    <div id="jewelcraft" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Adds a socketing system allowing you to find/craft gems to power up your gear.</p>
-            <div class="section-title">Enable</div>
-            <p>Access the Jewelcrafting tab at any Forge.</p>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#jewelcraft"
+            >
+              Jewelcrafting
+            </button>
+          </h2>
+          <div
+            id="jewelcraft"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Adds a socketing system allowing
+                you to find/craft gems to power up your gear.
+              </p>
+              <div class="section-title">Enable</div>
+              <p>Access the Jewelcrafting tab at any Forge.</p>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#targetPortal">TargetPortal</button></h2>
-    <div id="targetPortal" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Allows you to select any existing portal destination from a map UI when stepping into a portal.</p>
-            <div class="section-title">Hotkeys</div>
-            <ul><li>Toggle Icon Display: <span class="key-badge">P</span></li></ul>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#targetPortal"
+            >
+              TargetPortal
+            </button>
+          </h2>
+          <div
+            id="targetPortal"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Allows you to select any existing
+                portal destination from a map UI when stepping into a portal.
+              </p>
+              <div class="section-title">Hotkeys</div>
+              <ul>
+                <li>Toggle Icon Display: <span class="key-badge">P</span></li>
+              </ul>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#backpacks">Adventure Backpacks</button></h2>
-    <div id="backpacks" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Adds various craftable backpacks that provide extra inventory space.</p>
-            <div class="section-title">Hotkeys</div>
-            <ul>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#backpacks"
+            >
+              Adventure Backpacks
+            </button>
+          </h2>
+          <div
+            id="backpacks"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Adds various craftable backpacks
+                that provide extra inventory space.
+              </p>
+              <div class="section-title">Hotkeys</div>
+              <ul>
                 <li>Open Backpack: <span class="key-badge">I</span></li>
                 <li>Quickdrop Backpack: <span class="key-badge">Y</span></li>
-            </ul>
+              </ul>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#buildCam">Build Camera</button></h2>
-    <div id="buildCam" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Detaches the camera for free-flight building.</p>
-            <div class="section-title">Hotkeys</div>
-            <ul><li>Toggle Camera: <span class="key-badge">B</span> (while holding Hammer)</li></ul>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#buildCam"
+            >
+              Build Camera
+            </button>
+          </h2>
+          <div
+            id="buildCam"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Detaches the camera for
+                free-flight building.
+              </p>
+              <div class="section-title">Hotkeys</div>
+              <ul>
+                <li>
+                  Toggle Camera: <span class="key-badge">B</span> (while holding
+                  Hammer)
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#shipStats">Ship Stats</button></h2>
-    <div id="shipStats" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Displays UI showing ship health, speed, and wind stats.</p>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#shipStats"
+            >
+              Ship Stats
+            </button>
+          </h2>
+          <div
+            id="shipStats"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Displays UI showing ship health,
+                speed, and wind stats.
+              </p>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#noRain">No Rain Damage</button></h2>
-    <div id="noRain" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Prevents wood structures from rotting/turning green during rain.</p>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#noRain"
+            >
+              No Rain Damage
+            </button>
+          </h2>
+          <div
+            id="noRain"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Prevents wood structures from
+                rotting/turning green during rain.
+              </p>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fuelEternal">Fuel Eternal</button></h2>
-    <div id="fuelEternal" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Torches, fires, and braziers never run out of fuel.</p>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#fuelEternal"
+            >
+              Fuel Eternal
+            </button>
+          </h2>
+          <div
+            id="fuelEternal"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Torches, fires, and braziers never
+                run out of fuel.
+              </p>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#betterTames">Better Tames</button></h2>
-    <div id="betterTames" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Speeds up the taming process and adds better management for pets.</p>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#betterTames"
+            >
+              Better Tames
+            </button>
+          </h2>
+          <div
+            id="betterTames"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Speeds up the taming process and
+                adds better management for pets.
+              </p>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#doorOpener">DoorOpenerBruh</button></h2>
-    <div id="doorOpener" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Automatically opens and closes doors when you walk near them.</p>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#doorOpener"
+            >
+              DoorOpenerBruh
+            </button>
+          </h2>
+          <div
+            id="doorOpener"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Automatically opens and closes
+                doors when you walk near them.
+              </p>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#zenRedec">ZenRedecorate</button></h2>
-    <div id="zenRedec" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Allows moving furniture and full chests without destroying them.</p>
-            <div class="section-title">Hotkeys</div>
-            <ul><li>Pick Up Object: <span class="key-badge">L Ctrl + L Click</span> (with Hammer)</li></ul>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#zenRedec"
+            >
+              ZenRedecorate
+            </button>
+          </h2>
+          <div
+            id="zenRedec"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Allows moving furniture and full
+                chests without destroying them.
+              </p>
+              <div class="section-title">Hotkeys</div>
+              <ul>
+                <li>
+                  Pick Up Object:
+                  <span class="key-badge">L Ctrl + L Click</span> (with Hammer)
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#massFarm">Mass Farming</button></h2>
-    <div id="massFarm" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Plant and harvest crops in a grid.</p>
-            <div class="section-title">Hotkeys</div>
-            <ul><li>Hold <span class="key-badge">L Shift</span> to plant/harvest in a grid.</li></ul>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#massFarm"
+            >
+              Mass Farming
+            </button>
+          </h2>
+          <div
+            id="massFarm"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Plant and harvest crops in a grid.
+              </p>
+              <div class="section-title">Hotkeys</div>
+              <ul>
+                <li>
+                  Hold <span class="key-badge">L Shift</span> to plant/harvest
+                  in a grid.
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#littleUI">My Little UI / Weatherman</button></h2>
-    <div id="littleUI" class="accordion-collapse collapse" data-bs-parent="#modList">
-        <div class="accordion-body">
-            <p><strong>Description:</strong> Adds HUD elements for Clock, Weather forecasting, and Wind.</p>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#littleUI"
+            >
+              My Little UI / Weatherman
+            </button>
+          </h2>
+          <div
+            id="littleUI"
+            class="accordion-collapse collapse"
+            data-bs-parent="#modList"
+          >
+            <div class="accordion-body">
+              <p>
+                <strong>Description:</strong> Adds HUD elements for Clock,
+                Weather forecasting, and Wind.
+              </p>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
+      <div
+        class="admin-section"
+        style="
+          background: #1a1a1a;
+          border: 1px solid #444;
+          padding: 20px;
+          border-radius: 8px;
+          margin-top: 40px;
+        "
+      >
+        <h2
+          style="
+            color: #ff5252;
+            border-bottom: 2px solid #ff5252;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+          "
+        >
+          👑 Admin Management & Commands
+        </h2>
 
-        </div>
-        <div class="admin-section" style="background: #1a1a1a; border: 1px solid #444; padding: 20px; border-radius: 8px; margin-top: 40px;">
-    <h2 style="color: #ff5252; border-bottom: 2px solid #ff5252; padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">👑 Admin Management & Commands</h2>
-    
-    <div class="section-title">How to Add Admins</div>
-    <p>To grant admin rights, you must add the player's <strong>SteamID64</strong> to the server files:</p>
-    <ol>
-        <li>Find the <code>adminlist.txt</code> file (usually in the server's save folder or <code>AppData/LocalLow/IronGate/Valheim</code>).</li>
-        <li>Paste the SteamID64 (a long 17-digit number). Add one ID per line.</li>
-        <li><strong>How to find ID:</strong> Press <span class="key-badge">F2</span> while in-game to see a list of players and their IDs next to their names.</li>
-    </ol>
+        <div class="section-title">How to Add Admins</div>
+        <p>
+          To grant admin rights, you must add the player's
+          <strong>SteamID64</strong> to the server files:
+        </p>
+        <ol>
+          <li>
+            Find the <code>adminlist.txt</code> file (usually in the server's
+            save folder or <code>AppData/LocalLow/IronGate/Valheim</code>).
+          </li>
+          <li>
+            Paste the SteamID64 (a long 17-digit number). Add one ID per line.
+          </li>
+          <li>
+            <strong>How to find ID:</strong> Press
+            <span class="key-badge">F2</span> while in-game to see a list of
+            players and their IDs next to their names.
+          </li>
+        </ol>
 
-    <div class="section-title">Universal Console Commands</div>
-    <p>Press <span class="key-badge">F5</span> to open the console. (Must have <code>-console</code> as a Steam Launch Option).</p>
-    <ul>
-        <li><code>devcommands</code> - Enables administrative commands (Admin only).</li>
-        <li><code>debugmode</code> - Creative mode (Press <strong>B</strong> for free build, <strong>K</strong> to kill mobs, <strong>Z</strong> to fly).</li>
-        <li><code>save</code> - Forces the server to save the world immediately.</li>
-        <li><code>kick [name/ID]</code> / <code>ban [name/ID]</code> - Manage problem players.</li>
-    </ul>
+        <div class="section-title">Universal Console Commands</div>
+        <p>
+          Press <span class="key-badge">F5</span> to open the console. (Must
+          have <code>-console</code> as a Steam Launch Option).
+        </p>
+        <ul>
+          <li>
+            <code>devcommands</code> - Enables administrative commands (Admin
+            only).
+          </li>
+          <li>
+            <code>debugmode</code> - Creative mode (Press <strong>B</strong> for
+            free build, <strong>K</strong> to kill mobs, <strong>Z</strong> to
+            fly).
+          </li>
+          <li>
+            <code>save</code> - Forces the server to save the world immediately.
+          </li>
+          <li>
+            <code>kick [name/ID]</code> / <code>ban [name/ID]</code> - Manage
+            problem players.
+          </li>
+        </ul>
 
-    <div class="section-title">Mod Specific Commands</div>
-    <ul>
-        <li><strong>Seasonality:</strong> <code>seasonality timer_reset</code> - Restores the season schedule if it gets desynced.</li>
-        <li><strong>Epic Loot:</strong> <code>magicitem [rarity] [item]</code> - Spawns a magic item (e.g. <code>magicitem Legendary SwordIron</code>).</li>
-        <li><strong>Epic Loot:</strong> <code>bounties</code> - Lists all available bounties currently active in the world.</li>
-        <li><strong>Automatic Fuel:</strong> <code>autofuel reset</code> - Forces all stations to re-scan for nearby containers.</li>
-    </ul>
-</div>
+        <div class="section-title">Mod Specific Commands</div>
+        <ul>
+          <li>
+            <strong>Seasonality:</strong> <code>seasonality timer_reset</code> -
+            Restores the season schedule if it gets desynced.
+          </li>
+          <li>
+            <strong>Epic Loot:</strong> <code>magicitem [rarity] [item]</code> -
+            Spawns a magic item (e.g.
+            <code>magicitem Legendary SwordIron</code>).
+          </li>
+          <li>
+            <strong>Epic Loot:</strong> <code>bounties</code> - Lists all
+            available bounties currently active in the world.
+          </li>
+          <li>
+            <strong>Automatic Fuel:</strong> <code>autofuel reset</code> -
+            Forces all stations to re-scan for nearby containers.
+          </li>
+        </ul>
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-const API_KEY = 'AIzaSyCuLp3VtWNVZOUHkuuHGSl4URytfYSPgPU';
-const FOLDER_ID = '1YGdhyTaMHiWQYwDWCV8r46qtWtazcbQ9';
+      const API_KEY = "AIzaSyCuLp3VtWNVZOUHkuuHGSl4URytfYSPgPU";
+      const FOLDER_ID = "1YGdhyTaMHiWQYwDWCV8r46qtWtazcbQ9";
 
-async function getLatestDriveZip() {
-    const statusText = document.getElementById('pack-status');
-    const container = document.getElementById('download-container');
-    const downloadLink = document.getElementById('download-link');
-    const filenameDisplay = document.getElementById('filename');
+      async function getLatestDriveZip() {
+        const statusText = document.getElementById("pack-status");
+        const container = document.getElementById("download-container");
 
-    const query = encodeURIComponent(`'${FOLDER_ID}' in parents and trashed = false`);
-    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&orderBy=name+desc&fields=files(id,name)&key=${API_KEY}`;
+        const modsLink = document.getElementById("download-link-mods");
+        const modsFileLabel = document.getElementById("filename-mods");
 
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
+        const configLink = document.getElementById("download-link-config");
+        const configFileLabel = document.getElementById("filename-config");
 
-        if (data.files && data.files.length > 0) {
-            // Find the first file that is a zip
-            const latestZip = data.files.find(f => f.name.toLowerCase().endsWith('.zip'));
+        // Query for all non-trashed files in the folder
+        const query = encodeURIComponent(
+          `'${FOLDER_ID}' in parents and trashed = false`
+        );
+        const url = `https://www.googleapis.com/drive/v3/files?q=${query}&orderBy=name+desc&fields=files(id,name)&key=${API_KEY}`;
 
-            if (latestZip) {
-                if (statusText) statusText.style.display = 'none';
-                if (container) container.style.display = 'block';
-                if (downloadLink) downloadLink.href = `https://drive.google.com/uc?export=download&id=${latestZip.id}&confirm=t`;
-                if (filenameDisplay) filenameDisplay.innerText = latestZip.name;
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (data.files && data.files.length > 0) {
+            // Filter files based on naming convention (case insensitive)
+            const latestMods = data.files.find(
+              (f) =>
+                f.name.toLowerCase().includes("mods") && f.name.endsWith(".zip")
+            );
+            const latestConfig = data.files.find(
+              (f) =>
+                (f.name.toLowerCase().includes("config") ||
+                  f.name.toLowerCase().includes("cfg")) &&
+                f.name.endsWith(".zip")
+            );
+
+            statusText.style.display = "none";
+            container.style.display = "block";
+
+            // Update Mods UI
+            if (latestMods) {
+              modsLink.href = `https://drive.google.com/uc?export=download&id=${latestMods.id}&confirm=t`;
+              modsFileLabel.innerText = latestMods.name;
             } else {
-                if (statusText) statusText.innerText = "No .zip files found in folder.";
+              modsFileLabel.innerText = "No mods zip found.";
+              modsLink.style.opacity = "0.5";
+              modsLink.style.pointerEvents = "none";
             }
-        } else {
-            if (statusText) statusText.innerText = "Folder is empty.";
-        }
-    } catch (error) {
-        if (statusText) statusText.innerText = "Error connecting to Google Drive.";
-        console.error(error);
-    }
-}
 
-window.addEventListener('load', getLatestDriveZip);
+            // Update Config UI
+            if (latestConfig) {
+              configLink.href = `https://drive.google.com/uc?export=download&id=${latestConfig.id}&confirm=t`;
+              configFileLabel.innerText = latestConfig.name;
+            } else {
+              configFileLabel.innerText = "No config zip found.";
+              configLink.style.opacity = "0.5";
+              configLink.style.pointerEvents = "none";
+            }
+          } else {
+            statusText.innerText = "Folder is empty.";
+          }
+        } catch (error) {
+          statusText.innerText = "Error connecting to Google Drive.";
+          console.error(error);
+        }
+      }
+
+      window.addEventListener("load", getLatestDriveZip);
     </script>
-</body>
+  </body>
 </html>
