@@ -103,73 +103,92 @@
             border-radius: 8px;
           "
         >
-          <div style="margin-bottom: 20px">
-            <h6 style="color: #00d4ff">1. Mods Pack</h6>
-            <a
-              id="download-link-mods"
-              href="#"
-              class="btn"
-              style="
-                background-color: #00d4ff;
-                color: #000;
-                font-weight: bold;
-                padding: 10px 20px;
-                text-decoration: none;
-                border-radius: 5px;
-                display: inline-block;
-              "
-            >
-              Download Latest Mods (.zip)
-            </a>
-            <p style="font-size: 0.8em; margin-top: 5px; color: #888">
-              Filename: <span id="filename-mods">Searching...</span>
-            </p>
+          <div style="background: #252525; padding: 15px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #444">
+            <h5 style="color: #00d4ff; margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #00d4ff; padding-bottom: 10px">🔧 Manual Installation Method</h5>
+            
+            <div style="margin-bottom: 20px">
+              <h6 style="color: #00d4ff">1. Mods Pack</h6>
+              <a
+                id="download-link-mods"
+                href="#"
+                class="btn"
+                style="
+                  background-color: #00d4ff;
+                  color: #000;
+                  font-weight: bold;
+                  padding: 10px 20px;
+                  text-decoration: none;
+                  border-radius: 5px;
+                  display: inline-block;
+                "
+              >
+                Download Latest Mods (.zip)
+              </a>
+              <p style="font-size: 0.8em; margin-top: 5px; color: #888">
+                Filename: <span id="filename-mods">Searching...</span>
+              </p>
+              <div class="tip-box" style="margin-top: 10px; font-size: 0.9em">
+                <strong>⚠️ Installation:</strong> First, <strong>empty</strong> your existing plugins folder, then unzip all folders into:<br>
+                <code style="color: #00d4ff">C:\Program Files (x86)\Steam\steamapps\common\Valheim\BepInEx\plugins</code>
+              </div>
+            </div>
+
+            <div>
+              <h6 style="color: #00d4ff">2. Server Configurations</h6>
+              <a
+                id="download-link-config"
+                href="#"
+                class="btn"
+                style="
+                  background-color: #00d4ff;
+                  color: #000;
+                  font-weight: bold;
+                  padding: 10px 20px;
+                  text-decoration: none;
+                  border-radius: 5px;
+                  display: inline-block;
+                "
+              >
+                Download Latest Configs (.zip)
+              </a>
+              <p style="font-size: 0.8em; margin-top: 5px; color: #888">
+                Filename: <span id="filename-config">Searching...</span>
+              </p>
+              <div class="tip-box" style="margin-top: 10px; font-size: 0.9em">
+                <strong>📁 Installation:</strong> Unzip all files/folders into:<br>
+                <code style="color: #00d4ff">C:\Program Files (x86)\Steam\steamapps\common\Valheim\BepInEx\config</code>
+              </div>
+            </div>
           </div>
 
-          <div style="margin-bottom: 20px">
-            <h6 style="color: #00d4ff">2. Server Configurations</h6>
-            <a
-              id="download-link-config"
-              href="#"
-              class="btn"
-              style="
-                background-color: #00d4ff;
-                color: #000;
-                font-weight: bold;
-                padding: 10px 20px;
-                text-decoration: none;
-                border-radius: 5px;
-                display: inline-block;
-              "
-            >
-              Download Latest Configs (.zip)
-            </a>
-            <p style="font-size: 0.8em; margin-top: 5px; color: #888">
-              Filename: <span id="filename-config">Searching...</span>
-            </p>
-          </div>
-
-          <div>
-            <h6 style="color: #00d4ff">3. r2modman Profile</h6>
-            <a
-              id="download-link-r2modman"
-              href="#"
-              class="btn"
-              style="
-                background-color: #ffca28;
-                color: #000;
-                font-weight: bold;
-                padding: 10px 20px;
-                text-decoration: none;
-                border-radius: 5px;
-                display: inline-block;
-              "
-            >
-              Download Latest Profile (.r2z)
-            </a>
-            <p style="font-size: 0.8em; margin-top: 5px; color: #888">
-              Filename: <span id="filename-r2modman">Searching...</span>
-            </p>
+          <div style="background: #2a2510; padding: 15px; border-radius: 8px; border: 1px solid #ffca28">
+            <h5 style="color: #ffca28; margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #ffca28; padding-bottom: 10px">📦 r2modman Method (Alternative)</h5>
+            
+            <div>
+              <a
+                id="download-link-r2modman"
+                href="#"
+                class="btn"
+                style="
+                  background-color: #ffca28;
+                  color: #000;
+                  font-weight: bold;
+                  padding: 10px 20px;
+                  text-decoration: none;
+                  border-radius: 5px;
+                  display: inline-block;
+                "
+              >
+                Download Latest Profile (.r2z)
+              </a>
+              <p style="font-size: 0.8em; margin-top: 5px; color: #888">
+                Filename: <span id="filename-r2modman">Searching...</span>
+              </p>
+              <div class="tip-box" style="margin-top: 10px; font-size: 0.9em; background: #1a1a1a">
+                <strong>💡 Alternative Option:</strong> Instead of manually installing mods and configs (steps 1 & 2), you can use <strong>r2modman</strong> to import this single profile file which includes both mods and configurations.<br>
+                <strong>Note:</strong> You must first setup r2modman to point to your Valheim installation.
+              </div>
+            </div>
           </div>
         </div>
       </div>
